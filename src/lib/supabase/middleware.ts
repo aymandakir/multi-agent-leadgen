@@ -6,6 +6,11 @@ export async function updateSession(request: NextRequest) {
     request,
   });
 
+  // Allow preview page to be completely public (no auth required, no Supabase client needed)
+  if (request.nextUrl.pathname.startsWith('/preview')) {
+    return supabaseResponse;
+  }
+
   // Check if Supabase environment variables are configured
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
