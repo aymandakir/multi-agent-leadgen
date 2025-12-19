@@ -11,13 +11,13 @@ export async function updateSession(request: NextRequest) {
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    // Redirect to setup page if Supabase is not configured
-    if (request.nextUrl.pathname !== '/supabase-setup') {
+    // Redirect to preview page if Supabase is not configured
+    if (request.nextUrl.pathname !== '/preview' && request.nextUrl.pathname !== '/supabase-setup') {
       const url = request.nextUrl.clone();
-      url.pathname = '/supabase-setup';
+      url.pathname = '/preview';
       return NextResponse.redirect(url);
     }
-    // Allow the setup page to load
+    // Allow preview and setup pages to load
     return supabaseResponse;
   }
 

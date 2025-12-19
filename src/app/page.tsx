@@ -28,16 +28,16 @@ export default function Home() {
         <p className="mb-8 max-w-2xl text-xl text-gray-600 dark:text-gray-400">
           Automate your lead generation with AI agents that source, enrich, personalize, and analyze leads at scale.
         </p>
-        <div className="flex gap-4">
-          <Link href="/signup">
-            <Button size="lg">Start Free Trial</Button>
-          </Link>
-          <Link href="#features">
-            <Button size="lg" variant="outline">
-              Learn More
-            </Button>
-          </Link>
-        </div>
+          <div className="flex gap-4">
+            <Link href="/preview">
+              <Button size="lg">View Live Preview</Button>
+            </Link>
+            <Link href="/signup">
+              <Button size="lg" variant="outline">
+                Get Started
+              </Button>
+            </Link>
+          </div>
       </section>
 
       {/* Features Section */}

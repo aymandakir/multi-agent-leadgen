@@ -9,8 +9,18 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "LeadGen AI - Multi-Agent Lead Generation",
-  description: "Automate your lead generation with AI agents",
+  title: "Multi-Agent Leadgen • Live Preview | Yexity",
+  description: "AI-powered lead generation with automated sourcing, enrichment, outreach, and analysis. See it live in action.",
+  openGraph: {
+    title: "Multi-Agent Leadgen • Live Preview",
+    description: "AI-powered lead generation platform with real-time dashboard",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Multi-Agent Leadgen • Live Preview",
+    description: "AI-powered lead generation platform",
+  },
 };
 
 export default function RootLayout({
