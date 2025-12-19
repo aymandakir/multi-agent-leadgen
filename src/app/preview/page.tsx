@@ -6,7 +6,6 @@ import HeroSection from '@/components/preview/HeroSection';
 import DashboardGrid from '@/components/preview/DashboardGrid';
 import LeadsTable from '@/components/preview/LeadsTable';
 import StatusBar from '@/components/preview/StatusBar';
-import DeployFooter from '@/components/preview/DeployFooter';
 import { useThemeStore } from '@/lib/stores/theme-store';
 
 const ParticleBackground = dynamic(() => import('@/components/preview/ParticleBackground'), {
@@ -32,14 +31,6 @@ export default function PreviewPage() {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, [theme, setTheme]);
 
-  useEffect(() => {
-    if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [theme]);
-
   return (
     <div className="min-h-screen relative overflow-x-hidden bg-white dark:bg-black">
       <ParticleBackground />
@@ -49,7 +40,6 @@ export default function PreviewPage() {
         <DashboardGrid />
         <LeadsTable />
       </div>
-      <DeployFooter />
     </div>
   );
 }
