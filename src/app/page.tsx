@@ -30,17 +30,17 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
-        <div className="container mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
           <motion.div
-            className="text-2xl font-semibold text-gray-900"
+            className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900 truncate"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
             Multi-Agent Leadgen
           </motion.div>
-          <nav className="flex items-center gap-6">
-            <Link href="/preview" className="text-gray-700 hover:text-gray-900 transition-colors font-medium">
+          <nav className="flex items-center gap-3 sm:gap-6">
+            <Link href="/preview" className="text-sm sm:text-base text-gray-700 hover:text-gray-900 transition-colors font-medium whitespace-nowrap">
               View Dashboard
             </Link>
           </nav>
@@ -48,7 +48,7 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="pt-40 pb-32 px-6 lg:px-8 bg-gradient-to-b from-white to-[#FFF8F0]">
+      <section className="pt-24 sm:pt-32 md:pt-40 pb-16 sm:pb-24 md:pb-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-[#FFF8F0]">
         <div className="container mx-auto max-w-5xl">
           <motion.div
             className="text-center"
@@ -57,18 +57,18 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <motion.h1
-              className="text-6xl md:text-7xl lg:text-8xl font-semibold mb-8 text-gray-900 leading-tight tracking-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold mb-6 sm:mb-8 text-gray-900 leading-tight tracking-tight px-2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
               Create a lead generation
-              <br />
+              <br className="hidden sm:block" />
               <span className="text-[#FF6B35]">without limits</span>
             </motion.h1>
 
             <motion.p
-              className="text-xl md:text-2xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed font-light"
+              className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed font-light px-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
@@ -77,15 +77,15 @@ export default function Home() {
             </motion.p>
 
             <motion.div
-              className="flex justify-center"
+              className="flex justify-center px-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
             >
               <Link href="/preview">
-                <Button className="bg-[#FF6B35] hover:bg-[#E55A2B] text-white px-8 py-6 text-lg font-medium rounded-lg h-auto">
+                <Button className="bg-[#FF6B35] hover:bg-[#E55A2B] text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-medium rounded-lg h-auto w-full sm:w-auto">
                   View Dashboard
-                  <ArrowRight className="ml-2 w-5 h-5" />
+                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </Link>
             </motion.div>
@@ -103,10 +103,10 @@ export default function Home() {
       </section>
 
       {/* Features Grid */}
-      <section className="py-32 px-6 lg:px-8 bg-white">
+      <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="container mx-auto max-w-6xl">
           <motion.h2
-            className="text-5xl md:text-6xl font-semibold mb-6 text-center text-gray-900 mb-20"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-12 sm:mb-16 md:mb-20 text-center text-gray-900 px-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -114,7 +114,7 @@ export default function Home() {
             How It Works
           </motion.h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {[
               {
                 icon: Zap,
@@ -164,9 +164,9 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-24 px-6 lg:px-8 bg-[#F8F8F8]">
+      <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-[#F8F8F8]">
         <div className="container mx-auto max-w-6xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12">
             {[
               { value: '247+', label: 'Leads Generated' },
               { value: '23.4%', label: 'Conversion Rate' },
@@ -181,10 +181,10 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.4 }}
               >
-                <div className="text-5xl md:text-6xl font-semibold mb-3 text-gray-900">
+                <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-2 sm:mb-3 text-gray-900">
                   {stat.value}
                 </div>
-                <div className="text-gray-600">{stat.label}</div>
+                <div className="text-sm sm:text-base text-gray-600">{stat.label}</div>
               </motion.div>
             ))}
           </div>
@@ -192,10 +192,10 @@ export default function Home() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-32 px-6 lg:px-8 bg-white">
+      <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="container mx-auto max-w-4xl">
           <motion.h2
-            className="text-5xl md:text-6xl font-semibold mb-16 text-center text-gray-900"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-12 sm:mb-16 text-center text-gray-900 px-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -203,7 +203,7 @@ export default function Home() {
             Why Choose Multi-Agent Leadgen?
           </motion.h2>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {[
               'Automated lead sourcing saves 20+ hours per week',
               'AI-powered personalization increases response rates by 3x',
@@ -213,14 +213,14 @@ export default function Home() {
             ].map((benefit, index) => (
               <motion.div
                 key={benefit}
-                className="flex items-start gap-4 bg-[#FFF8F0] rounded-xl p-6"
+                className="flex items-start gap-3 sm:gap-4 bg-[#FFF8F0] rounded-xl p-4 sm:p-6"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.4 }}
               >
-                <CheckCircle2 className="w-6 h-6 text-[#FF6B35] flex-shrink-0 mt-1" />
-                <p className="text-lg text-gray-700">{benefit}</p>
+                <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF6B35] flex-shrink-0 mt-0.5 sm:mt-1" />
+                <p className="text-base sm:text-lg text-gray-700">{benefit}</p>
               </motion.div>
             ))}
           </div>
@@ -228,10 +228,10 @@ export default function Home() {
       </section>
 
       {/* FAQ Section - Enhanced with glossy effects */}
-      <section className="py-32 px-6 lg:px-8 bg-gradient-to-b from-[#F8F8F8] to-white">
+      <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#F8F8F8] to-white">
         <div className="container mx-auto max-w-4xl">
           <motion.h2
-            className="text-5xl md:text-6xl font-semibold mb-20 text-center text-gray-900"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-12 sm:mb-16 md:mb-20 text-center text-gray-900 px-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -240,7 +240,7 @@ export default function Home() {
             Frequently Asked Questions
           </motion.h2>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {faqs.map((faq, index) => (
               <motion.div
                 key={index}
@@ -261,9 +261,9 @@ export default function Home() {
                 <div className="relative">
                   <button
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                    className="w-full p-8 flex items-center justify-between text-left hover:bg-white/50 transition-all duration-300 rounded-2xl group"
+                    className="w-full p-4 sm:p-6 md:p-8 flex items-center justify-between text-left hover:bg-white/50 transition-all duration-300 rounded-2xl group"
                   >
-                    <span className="text-xl font-semibold text-gray-900 pr-6 leading-relaxed">
+                    <span className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 pr-4 sm:pr-6 leading-relaxed">
                       {faq.question}
                     </span>
                     <motion.div
@@ -293,7 +293,7 @@ export default function Home() {
                     }}
                     className="overflow-hidden"
                   >
-                    <div className="px-8 pb-8 pt-0">
+                    <div className="px-4 sm:px-6 md:px-8 pb-4 sm:pb-6 md:pb-8 pt-0">
                       <motion.p
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ 
@@ -304,7 +304,7 @@ export default function Home() {
                           delay: openFaq === index ? 0.2 : 0,
                           duration: 0.3
                         }}
-                        className="text-gray-600 leading-relaxed text-lg"
+                        className="text-gray-600 leading-relaxed text-sm sm:text-base md:text-lg"
                       >
                         {faq.answer}
                       </motion.p>
@@ -318,7 +318,7 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-32 px-6 lg:px-8 bg-gradient-to-b from-white to-[#FFF8F0]">
+      <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-[#FFF8F0]">
         <div className="container mx-auto max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -326,16 +326,16 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-5xl md:text-6xl font-semibold mb-6 text-gray-900">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 sm:mb-6 text-gray-900 px-4">
               Your vision. Your goals. Your pipeline.
             </h2>
-            <p className="text-xl text-gray-600 mb-10">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 sm:mb-10 px-4">
               Join thousands of companies using AI to find and connect with their ideal customers.
             </p>
-            <Link href="/preview">
-              <Button className="bg-[#FF6B35] hover:bg-[#E55A2B] text-white px-10 py-7 text-lg font-medium rounded-lg h-auto">
+            <Link href="/preview" className="inline-block px-4">
+              <Button className="bg-[#FF6B35] hover:bg-[#E55A2B] text-white px-6 sm:px-8 md:px-10 py-5 sm:py-6 md:py-7 text-base sm:text-lg font-medium rounded-lg h-auto w-full sm:w-auto">
                 View Dashboard
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
             </Link>
           </motion.div>

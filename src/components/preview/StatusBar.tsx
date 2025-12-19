@@ -13,24 +13,24 @@ export default function StatusBar() {
       animate={{ y: 0 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
     >
-      <div className="container mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+        <div className="flex items-center gap-2 sm:gap-3 md:gap-4 flex-wrap">
           <button
             onClick={() => router.push('/')}
-            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors cursor-pointer"
+            className="text-xs sm:text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors cursor-pointer whitespace-nowrap"
             type="button"
           >
             ← Back to Home
           </button>
-          <span className="text-xs font-medium text-gray-500 tracking-wide">
+          <span className="text-xs font-medium text-gray-500 tracking-wide hidden sm:inline">
             leadgen-demo
           </span>
           <motion.span
-            className="px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-700 text-xs font-medium flex items-center gap-2"
+            className="px-2 sm:px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-700 text-xs font-medium flex items-center gap-1.5 sm:gap-2"
             animate={{ opacity: [1, 0.7, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <span className="w-2 h-2 rounded-full bg-green-500" />
+            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500" />
             Live
           </motion.span>
         </div>

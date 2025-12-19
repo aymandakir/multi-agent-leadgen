@@ -34,18 +34,18 @@ const agents = [
 export default function AgentPerformance() {
   return (
     <motion.div
-      className="bg-[#FFF8F0] rounded-2xl p-8 border border-gray-100 h-full"
+      className="bg-[#FFF8F0] rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-100 h-full"
       whileHover={{ y: -4 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
     >
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-10 h-10 rounded-xl bg-[#FF6B35] flex items-center justify-center">
-          <TrendingUp className="w-5 h-5 text-white" />
+      <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#FF6B35] flex items-center justify-center flex-shrink-0">
+          <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
         </div>
-        <h3 className="text-2xl font-semibold text-gray-900">Agent Performance</h3>
+        <h3 className="text-xl sm:text-2xl font-semibold text-gray-900">Agent Performance</h3>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {agents.map((agent, index) => {
           const Icon = agent.icon;
           return (
@@ -57,14 +57,14 @@ export default function AgentPerformance() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#FF6B35] flex items-center justify-center">
-                    <Icon className="w-4 h-4 text-white" />
+              <div className="flex items-center justify-between mb-2 sm:mb-3">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-[#FF6B35] flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                   </div>
-                  <span className="font-medium text-gray-900">{agent.name}</span>
+                  <span className="font-medium text-gray-900 text-sm sm:text-base truncate">{agent.name}</span>
                 </div>
-                <span className="text-lg font-semibold text-gray-900">
+                <span className="text-base sm:text-lg font-semibold text-gray-900 flex-shrink-0 ml-2">
                   {agent.performance}%
                 </span>
               </div>

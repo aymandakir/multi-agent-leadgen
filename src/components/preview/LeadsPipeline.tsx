@@ -20,18 +20,18 @@ export default function LeadsPipeline({ stats }: LeadsPipelineProps) {
 
   return (
     <motion.div
-      className="bg-[#FFF8F0] rounded-2xl p-8 border border-gray-100 h-full"
+      className="bg-[#FFF8F0] rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-100 h-full"
       whileHover={{ y: -4 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
     >
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-10 h-10 rounded-xl bg-[#FF6B35] flex items-center justify-center">
-          <Users className="w-5 h-5 text-white" />
+      <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#FF6B35] flex items-center justify-center flex-shrink-0">
+          <Users className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
         </div>
-        <h3 className="text-2xl font-semibold text-gray-900">Leads Pipeline</h3>
+        <h3 className="text-xl sm:text-2xl font-semibold text-gray-900">Leads Pipeline</h3>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {pipeline.map((item, index) => (
           <motion.div
             key={item.stage}
@@ -40,11 +40,11 @@ export default function LeadsPipeline({ stats }: LeadsPipelineProps) {
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
           >
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-gray-600">
+            <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+              <span className="text-xs sm:text-sm font-medium text-gray-600">
                 {item.stage}
               </span>
-              <span className="text-lg font-semibold text-gray-900">{item.count}</span>
+              <span className="text-base sm:text-lg font-semibold text-gray-900">{item.count}</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
               <motion.div
