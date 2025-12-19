@@ -77,20 +77,15 @@ export default function Home() {
             </motion.p>
 
             <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center"
+              className="flex justify-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
             >
               <Link href="/preview">
                 <Button className="bg-[#FF6B35] hover:bg-[#E55A2B] text-white px-8 py-6 text-lg font-medium rounded-lg h-auto">
-                  Get Started
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </Link>
-              <Link href="/preview">
-                <Button variant="outline" className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-6 text-lg font-medium rounded-lg h-auto">
                   View Dashboard
+                  <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
             </motion.div>
