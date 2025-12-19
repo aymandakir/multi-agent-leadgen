@@ -26,6 +26,7 @@ export function useDemoLeads() {
   useEffect(() => {
     const fetchLeads = async () => {
       try {
+        // Try to fetch from Supabase, but don't require auth
         const supabase = createClient();
         const { data, error } = await supabase
           .from('leads')
@@ -34,14 +35,14 @@ export function useDemoLeads() {
           .order('created_at', { ascending: false })
           .limit(50);
 
-        if (error) {
-          console.error('Error fetching leads:', error);
+        if (error || !data || data.length === 0) {
+          // Use demo data if Supabase fails or returns empty
           setLeads(getDemoLeads());
         } else {
-          setLeads(data && data.length > 0 ? data : getDemoLeads());
+          setLeads(data);
         }
       } catch (error) {
-        console.error('Error:', error);
+        // Always fallback to demo data for public preview
         setLeads(getDemoLeads());
       } finally {
         setLoading(false);
@@ -62,13 +63,14 @@ export function useLiveStats() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
+        // Try to fetch from Supabase, but don't require auth
         const supabase = createClient();
-        const { data: leads } = await supabase
+        const { data: leads, error } = await supabase
           .from('leads')
           .select('score, status')
           .eq('organization_id', ORG_ID);
 
-        if (leads && leads.length > 0) {
+        if (!error && leads && leads.length > 0) {
           const totalLeads = leads.length;
           const outreachSent = leads.filter(l => l.status === 'contacted' || l.status === 'responded').length;
           const conversionRate = totalLeads > 0 ? (outreachSent / totalLeads) * 100 : 0;
@@ -82,7 +84,9 @@ export function useLiveStats() {
             avgScore: Math.round(avgScore * 10) / 10,
           });
         }
+        // If error or no data, keep default stats
       } catch (error) {
+        // Keep default stats for public preview
         console.error('Error fetching stats:', error);
       }
     };
