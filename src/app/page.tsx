@@ -3,7 +3,9 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Sparkles, Zap, Target, TrendingUp, Shield, CheckCircle2 } from 'lucide-react';
+import { 
+  ArrowRight, Sparkles, Zap, Target, TrendingUp, Shield, CheckCircle2 
+} from 'lucide-react';
 import { useState } from 'react';
 
 export default function Home() {
@@ -26,7 +28,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header - Clean and minimal */}
+      {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
         <div className="container mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
           <motion.div
@@ -45,7 +47,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section - Spacious and warm */}
+      {/* Hero Section */}
       <section className="pt-40 pb-32 px-6 lg:px-8 bg-gradient-to-b from-white to-[#FFF8F0]">
         <div className="container mx-auto max-w-5xl">
           <motion.div
@@ -105,7 +107,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section - Clean grid */}
+      {/* Features Grid */}
       <section className="py-32 px-6 lg:px-8 bg-white">
         <div className="container mx-auto max-w-6xl">
           <motion.h2
@@ -152,7 +154,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: index * 0.1, duration: 0.4, ease: 'easeOut' }}
                 >
                   <div className={`w-12 h-12 ${feature.color} mb-6`}>
                     <Icon className="w-12 h-12" />
@@ -166,7 +168,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section - Minimal */}
+      {/* Stats Section */}
       <section className="py-24 px-6 lg:px-8 bg-[#F8F8F8]">
         <div className="container mx-auto max-w-6xl">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
@@ -182,7 +184,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.1, duration: 0.4 }}
               >
                 <div className="text-5xl md:text-6xl font-semibold mb-3 text-gray-900">
                   {stat.value}
@@ -194,7 +196,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Benefits Section - Clean list */}
+      {/* Benefits Section */}
       <section className="py-32 px-6 lg:px-8 bg-white">
         <div className="container mx-auto max-w-4xl">
           <motion.h2
@@ -220,7 +222,7 @@ export default function Home() {
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.1, duration: 0.4 }}
               >
                 <CheckCircle2 className="w-6 h-6 text-[#FF6B35] flex-shrink-0 mt-1" />
                 <p className="text-lg text-gray-700">{benefit}</p>
@@ -230,54 +232,90 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-32 px-6 lg:px-8 bg-[#F8F8F8]">
-        <div className="container mx-auto max-w-3xl">
+      {/* FAQ Section - Enhanced with glossy effects */}
+      <section className="py-32 px-6 lg:px-8 bg-gradient-to-b from-[#F8F8F8] to-white">
+        <div className="container mx-auto max-w-4xl">
           <motion.h2
-            className="text-5xl md:text-6xl font-semibold mb-16 text-center text-gray-900"
+            className="text-5xl md:text-6xl font-semibold mb-20 text-center text-gray-900"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
           >
             Frequently Asked Questions
           </motion.h2>
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
               <motion.div
                 key={index}
-                className="bg-white rounded-xl border border-gray-200 overflow-hidden"
-                initial={{ opacity: 0, y: 10 }}
+                className="relative overflow-hidden"
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05, duration: 0.3 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ 
+                  delay: index * 0.1, 
+                  duration: 0.5,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
               >
-                <button
-                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full p-6 flex items-center justify-between text-left hover:bg-[#FFF8F0] transition-colors group"
-                >
-                  <span className="text-lg font-medium text-gray-900 pr-4">{faq.question}</span>
-                  <motion.span
-                    className="text-xl text-gray-400 group-hover:text-[#FF6B35] transition-colors flex-shrink-0"
-                    animate={{ rotate: openFaq === index ? 45 : 0 }}
-                    transition={{ duration: 0.2 }}
+                {/* Glossy background effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-white via-[#FFF8F0] to-white opacity-60 rounded-2xl" />
+                <div className="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 shadow-sm" />
+                
+                <div className="relative">
+                  <button
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    className="w-full p-8 flex items-center justify-between text-left hover:bg-white/50 transition-all duration-300 rounded-2xl group"
                   >
-                    +
-                  </motion.span>
-                </button>
-                {openFaq === index && (
+                    <span className="text-xl font-semibold text-gray-900 pr-6 leading-relaxed">
+                      {faq.question}
+                    </span>
+                    <motion.div
+                      className="flex-shrink-0 w-8 h-8 rounded-full bg-[#FF6B35]/10 flex items-center justify-center group-hover:bg-[#FF6B35]/20 transition-colors"
+                      animate={{ 
+                        rotate: openFaq === index ? 45 : 0,
+                        scale: openFaq === index ? 1.1 : 1
+                      }}
+                      transition={{ 
+                        duration: 0.3,
+                        ease: [0.25, 0.46, 0.45, 0.94]
+                      }}
+                    >
+                      <span className="text-xl text-[#FF6B35] font-light">+</span>
+                    </motion.div>
+                  </button>
+                  
                   <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    initial={false}
+                    animate={{ 
+                      height: openFaq === index ? 'auto' : 0,
+                      opacity: openFaq === index ? 1 : 0
+                    }}
+                    transition={{ 
+                      duration: 0.4,
+                      ease: [0.25, 0.46, 0.45, 0.94]
+                    }}
                     className="overflow-hidden"
                   >
-                    <div className="px-6 pb-6 pt-0">
-                      <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                    <div className="px-8 pb-8 pt-0">
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ 
+                          opacity: openFaq === index ? 1 : 0,
+                          y: openFaq === index ? 0 : -10
+                        }}
+                        transition={{ 
+                          delay: openFaq === index ? 0.2 : 0,
+                          duration: 0.3
+                        }}
+                        className="text-gray-600 leading-relaxed text-lg"
+                      >
+                        {faq.answer}
+                      </motion.p>
                     </div>
                   </motion.div>
-                )}
+                </div>
               </motion.div>
             ))}
           </div>
@@ -291,6 +329,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
           >
             <h2 className="text-5xl md:text-6xl font-semibold mb-6 text-gray-900">
               Your vision. Your goals. Your pipeline.

@@ -13,8 +13,7 @@ import {
 } from '@tanstack/react-table';
 import { useDemoLeads } from '@/hooks/usePreviewData';
 import { Lead } from '@/lib/types';
-import { Search, ArrowUpDown, Building2, User, MapPin } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { Search, ArrowUpDown, User, MapPin } from 'lucide-react';
 
 export default function LeadsTable() {
   const { leads, loading } = useDemoLeads();
@@ -145,12 +144,13 @@ export default function LeadsTable() {
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-3xl font-semibold text-gray-900">Generated Leads</h2>
             <div className="relative w-64">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <Input
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input
+                type="text"
                 placeholder="Search leads..."
                 value={globalFilter}
                 onChange={(e) => setGlobalFilter(e.target.value)}
-                className="pl-10 bg-[#F8F8F8] border-gray-200"
+                className="w-full pl-11 pr-4 py-3 bg-[#F8F8F8] border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF6B35]/20 focus:border-[#FF6B35] transition-all"
               />
             </div>
           </div>
@@ -206,4 +206,3 @@ export default function LeadsTable() {
     </section>
   );
 }
-
