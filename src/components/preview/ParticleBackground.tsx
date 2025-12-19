@@ -29,17 +29,17 @@ export default function ParticleBackground() {
     resize();
     window.addEventListener('resize', resize);
 
-    const particleCount = 50;
+    const particleCount = 30;
     particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      size: Math.random() * 2 + 1,
+      vx: (Math.random() - 0.5) * 0.2,
+      vy: (Math.random() - 0.5) * 0.2,
+      size: Math.random() * 1.5 + 0.5,
     }));
 
     const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    const color = isDark ? 'rgba(96, 165, 250, 0.2)' : 'rgba(15, 107, 253, 0.15)';
+    const color = isDark ? 'rgba(0, 122, 255, 0.1)' : 'rgba(0, 122, 255, 0.08)';
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -81,4 +81,3 @@ export default function ParticleBackground() {
     />
   );
 }
-

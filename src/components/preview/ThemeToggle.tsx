@@ -10,12 +10,12 @@ export default function ThemeToggle() {
   const isDark = theme === 'dark' || (theme === 'system' && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
   useEffect(() => {
-    if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (isDark) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-  }, [theme]);
+  }, [isDark]);
 
   const toggleTheme = () => {
     setTheme(isDark ? 'light' : 'dark');
@@ -30,8 +30,9 @@ export default function ThemeToggle() {
     >
       <motion.div
         initial={false}
-        animate={{ rotate: isDark ? 180 : 0 }}
-        transition={{ duration: 0.3 }}
+        animate={{ rotate: isDark ? 180 : 0, scale: isDark ? 1 : 1 }}
+        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="absolute"
       >
         {isDark ? (
           <Moon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
@@ -42,4 +43,3 @@ export default function ThemeToggle() {
     </motion.button>
   );
 }
-

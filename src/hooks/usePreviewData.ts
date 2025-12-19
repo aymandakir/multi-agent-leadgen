@@ -5,14 +5,14 @@ import { createClient } from '@/lib/supabase/client';
 import { ORG_ID } from '@/lib/org-context';
 import { Lead } from '@/lib/types';
 
-interface DemoStats {
+interface PreviewStats {
   totalLeads: number;
   outreachSent: number;
   conversionRate: number;
   avgScore: number;
 }
 
-const defaultStats: DemoStats = {
+const defaultStats: PreviewStats = {
   totalLeads: 247,
   outreachSent: 198,
   conversionRate: 23.4,
@@ -32,14 +32,13 @@ export function useDemoLeads() {
           .select('*')
           .eq('organization_id', ORG_ID)
           .order('created_at', { ascending: false })
-          .limit(20);
+          .limit(50);
 
         if (error) {
           console.error('Error fetching leads:', error);
-          // Use demo data if fetch fails
           setLeads(getDemoLeads());
         } else {
-          setLeads(data || getDemoLeads());
+          setLeads(data && data.length > 0 ? data : getDemoLeads());
         }
       } catch (error) {
         console.error('Error:', error);
@@ -50,8 +49,6 @@ export function useDemoLeads() {
     };
 
     fetchLeads();
-    
-    // Refresh every 30 seconds
     const interval = setInterval(fetchLeads, 30000);
     return () => clearInterval(interval);
   }, []);
@@ -60,7 +57,7 @@ export function useDemoLeads() {
 }
 
 export function useLiveStats() {
-  const [stats, setStats] = useState<DemoStats>(defaultStats);
+  const [stats, setStats] = useState<PreviewStats>(defaultStats);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -91,7 +88,7 @@ export function useLiveStats() {
     };
 
     fetchStats();
-    const interval = setInterval(fetchStats, 3000);
+    const interval = setInterval(fetchStats, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -99,58 +96,34 @@ export function useLiveStats() {
 }
 
 function getDemoLeads(): Lead[] {
-  return [
-    {
-      id: '1',
-      campaign_id: 'demo-1',
-      company_name: 'Acme Corp',
-      company_size: '50-200',
-      industry: 'Technology',
-      role: 'VP of Engineering',
-      name: 'Sarah Johnson',
-      email: 'sarah@acme.com',
-      linkedin_url: 'https://linkedin.com/in/sarahjohnson',
-      location: 'San Francisco, CA',
-      enriched_data: {},
-      score: 92,
-      status: 'qualified',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    },
-    {
-      id: '2',
-      campaign_id: 'demo-1',
-      company_name: 'Tech Startup',
-      company_size: '10-50',
-      industry: 'SaaS',
-      role: 'CTO',
-      name: 'Michael Chen',
-      email: 'michael@techstartup.com',
-      linkedin_url: 'https://linkedin.com/in/michaelchen',
-      location: 'New York, NY',
-      enriched_data: {},
-      score: 87,
-      status: 'contacted',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    },
-    {
-      id: '3',
-      campaign_id: 'demo-1',
-      company_name: 'Innovation Labs',
-      company_size: '200-500',
-      industry: 'AI/ML',
-      role: 'Head of Product',
-      name: 'Emily Rodriguez',
-      email: 'emily@innovationlabs.com',
-      linkedin_url: 'https://linkedin.com/in/emilyrodriguez',
-      location: 'Austin, TX',
-      enriched_data: {},
-      score: 89,
-      status: 'new',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    },
+  const companies = [
+    'Acme Corp', 'Tech Startup', 'Innovation Labs', 'Digital Solutions', 'Cloud Systems',
+    'Data Analytics', 'AI Ventures', 'Future Tech', 'Smart Solutions', 'NextGen Inc',
   ];
+  const names = [
+    'Sarah Johnson', 'Michael Chen', 'Emily Rodriguez', 'David Kim', 'Jessica Martinez',
+    'Ryan Thompson', 'Amanda Wilson', 'James Brown', 'Lisa Anderson', 'Robert Taylor',
+  ];
+  const roles = ['VP of Engineering', 'CTO', 'Head of Product', 'VP of Sales', 'Director of Marketing'];
+  const locations = ['San Francisco, CA', 'New York, NY', 'Austin, TX', 'Seattle, WA', 'Boston, MA'];
+  const statuses: Array<'new' | 'contacted' | 'responded' | 'qualified'> = ['new', 'contacted', 'responded', 'qualified'];
+
+  return Array.from({ length: 20 }, (_, i) => ({
+    id: `demo-${i + 1}`,
+    campaign_id: 'demo-campaign',
+    company_name: companies[i % companies.length],
+    company_size: '50-200',
+    industry: 'Technology',
+    role: roles[i % roles.length],
+    name: names[i % names.length],
+    email: `${names[i % names.length].toLowerCase().replace(/\s+/g, '.')}@${companies[i % companies.length].toLowerCase().replace(/\s+/g, '')}.com`,
+    linkedin_url: `https://linkedin.com/in/${names[i % names.length].toLowerCase().replace(/\s+/g, '-')}`,
+    location: locations[i % locations.length],
+    enriched_data: {},
+    score: Math.floor(Math.random() * 20) + 75,
+    status: statuses[i % statuses.length],
+    created_at: new Date(Date.now() - i * 86400000).toISOString(),
+    updated_at: new Date(Date.now() - i * 86400000).toISOString(),
+  }));
 }
 
