@@ -334,7 +334,7 @@ export default function Home() {
             </p>
             <Link href="/preview">
               <Button className="bg-[#FF6B35] hover:bg-[#E55A2B] text-white px-10 py-7 text-lg font-medium rounded-lg h-auto">
-                Get Started
+                View Dashboard
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
