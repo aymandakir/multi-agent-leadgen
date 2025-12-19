@@ -1,22 +1,40 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { 
   ArrowRight, Sparkles, Zap, Target, TrendingUp, Shield, CheckCircle2 
 } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Footer from '@/components/Footer';
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const reducedMotion = useReducedMotion();
   const heroRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
   });
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+  
+  // Disable parallax on mobile and reduced motion
+  const y = useTransform(
+    scrollYProgress, 
+    [0, 1], 
+    reducedMotion || isMobile ? ['0%', '0%'] : ['0%', '50%']
+  );
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   const faqs = [
@@ -60,51 +78,68 @@ export default function Home() {
         ref={heroRef}
         className="pt-24 sm:pt-32 md:pt-40 pb-16 sm:pb-24 md:pb-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-[#FFF8F0] relative overflow-hidden"
       >
-        {/* Animated background elements */}
-        <motion.div
-          className="absolute inset-0 overflow-hidden pointer-events-none"
-          style={{ opacity }}
-        >
+        {/* Animated background elements - optimized for mobile */}
+        {!reducedMotion && (
           <motion.div
-            className="absolute top-20 left-10 w-72 h-72 bg-[#FF6B35]/5 rounded-full blur-3xl"
-            animate={{
-              x: [0, 100, 0],
-              y: [0, 50, 0],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          <motion.div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-[#FF6B35]/5 rounded-full blur-3xl"
-            animate={{
-              x: [0, -100, 0],
-              y: [0, -50, 0],
-              scale: [1, 1.3, 1],
-            }}
-            transition={{
-              duration: 25,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-        </motion.div>
+            className="absolute inset-0 overflow-hidden pointer-events-none"
+            style={{ opacity }}
+          >
+            <motion.div
+              className="absolute top-20 left-10 w-72 h-72 bg-[#FF6B35]/5 rounded-full blur-3xl"
+              animate={{
+                x: [0, 100, 0],
+                y: [0, 50, 0],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                ease: 'linear',
+              }}
+              style={{ 
+                willChange: 'transform', 
+                transform: 'translate3d(0, 0, 0)',
+                backfaceVisibility: 'hidden',
+              }}
+            />
+            <motion.div
+              className="absolute bottom-20 right-10 w-96 h-96 bg-[#FF6B35]/5 rounded-full blur-3xl"
+              animate={{
+                x: [0, -100, 0],
+                y: [0, -50, 0],
+                scale: [1, 1.3, 1],
+              }}
+              transition={{
+                duration: 25,
+                repeat: Infinity,
+                ease: 'linear',
+              }}
+              style={{ 
+                willChange: 'transform', 
+                transform: 'translate3d(0, 0, 0)',
+                backfaceVisibility: 'hidden',
+              }}
+            />
+          </motion.div>
+        )}
         <div className="container mx-auto max-w-5xl relative z-10">
           <motion.div
             className="text-center"
-            style={{ y }}
+            style={{ 
+              y: reducedMotion || isMobile ? undefined : y,
+              transform: 'translateZ(0)',
+              willChange: reducedMotion || isMobile ? 'opacity' : 'transform, opacity',
+            }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <motion.h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold mb-6 sm:mb-8 text-gray-900 leading-tight tracking-tight px-2"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-semibold mb-6 sm:mb-8 text-gray-900 leading-tight tracking-tight px-2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+              style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
             >
               Create a lead generation
               <br className="hidden sm:block" />
@@ -112,10 +147,11 @@ export default function Home() {
             </motion.h1>
 
             <motion.p
-              className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed font-light px-4"
+              className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-600 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed font-light px-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
             >
               Bring your sales pipeline to life with AI-powered multi-agent automation.
             </motion.p>
