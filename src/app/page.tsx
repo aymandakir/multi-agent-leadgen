@@ -518,49 +518,6 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 dark:border-gray-800 py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-950">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-                Multi-Agent Leadgen
-              </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                AI-powered lead generation platform for modern sales teams.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-black dark:text-white">Product</h3>
-              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                <li><Link href="/preview" className="hover:text-gray-900 dark:hover:text-white">Features</Link></li>
-                <li><Link href="/preview" className="hover:text-gray-900 dark:hover:text-white">Pricing</Link></li>
-                <li><Link href="/preview" className="hover:text-gray-900 dark:hover:text-white">Integrations</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-black dark:text-white">Company</h3>
-              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                <li><Link href="#" className="hover:text-gray-900 dark:hover:text-white">About</Link></li>
-                <li><Link href="#" className="hover:text-gray-900 dark:hover:text-white">Blog</Link></li>
-                <li><Link href="#" className="hover:text-gray-900 dark:hover:text-white">Careers</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-black dark:text-white">Support</h3>
-              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                <li><Link href="#" className="hover:text-gray-900 dark:hover:text-white">Documentation</Link></li>
-                <li><Link href="#" className="hover:text-gray-900 dark:hover:text-white">Help Center</Link></li>
-                <li><Link href="#" className="hover:text-gray-900 dark:hover:text-white">Contact</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-200 dark:border-gray-800 pt-8 text-center text-sm text-gray-600 dark:text-gray-400">
-            © 2024 Multi-Agent Leadgen. All rights reserved.
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
