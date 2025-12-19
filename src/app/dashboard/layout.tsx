@@ -12,15 +12,15 @@ export default async function DashboardLayout({
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect('/login');
+    redirect('/');
   }
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="border-b border-gray-200 dark:border-gray-800">
+      <header className="border-b border-gray-200">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/dashboard" className="text-xl font-bold">
-            LeadGen AI
+          <Link href="/" className="text-xl font-bold">
+            Multi-Agent Leadgen
           </Link>
           <nav className="flex items-center gap-4">
             <Link href="/dashboard">
@@ -28,6 +28,9 @@ export default async function DashboardLayout({
             </Link>
             <Link href="/dashboard/settings">
               <Button variant="ghost">Settings</Button>
+            </Link>
+            <Link href="/" className="text-gray-600 hover:text-gray-900 text-sm font-medium">
+              ← Back to Home
             </Link>
             <form action="/api/auth/signout" method="POST">
               <Button type="submit" variant="ghost">
