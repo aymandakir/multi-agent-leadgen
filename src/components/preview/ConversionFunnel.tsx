@@ -20,15 +20,15 @@ export default function ConversionFunnel({ stats }: ConversionFunnelProps) {
 
   return (
     <motion.div
-      className="backdrop-blur-[20px] bg-white/60 dark:bg-white/5 rounded-2xl p-8 border border-white/10 h-full"
-      whileHover={{ y: -8, scale: 1.02 }}
+      className="bg-[#FFF8F0] rounded-2xl p-8 border border-gray-100 h-full"
+      whileHover={{ y: -4 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
     >
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center">
+      <div className="flex items-center gap-3 mb-8">
+        <div className="w-10 h-10 rounded-xl bg-[#FF6B35] flex items-center justify-center">
           <CheckCircle2 className="w-5 h-5 text-white" />
         </div>
-        <h3 className="text-2xl font-bold text-black dark:text-white">Conversion Funnel</h3>
+        <h3 className="text-2xl font-semibold text-gray-900">Conversion Funnel</h3>
       </div>
 
       <div className="space-y-4">
@@ -41,13 +41,13 @@ export default function ConversionFunnel({ stats }: ConversionFunnelProps) {
             transition={{ delay: index * 0.1 }}
           >
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <span className="text-sm font-medium text-gray-600">
                 {stage.name}
               </span>
-              <span className="text-lg font-bold text-black dark:text-white">{stage.count}</span>
+              <span className="text-lg font-semibold text-gray-900">{stage.count}</span>
             </div>
             <motion.div
-              className="w-full bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 rounded-lg h-8 flex items-center justify-end pr-4"
+              className="w-full bg-[#FF6B35] rounded-lg h-8 flex items-center justify-end pr-4"
               initial={{ width: 0 }}
               whileInView={{ width: `${stage.width}%` }}
               viewport={{ once: true }}
@@ -72,4 +72,3 @@ export default function ConversionFunnel({ stats }: ConversionFunnelProps) {
     </motion.div>
   );
 }
-

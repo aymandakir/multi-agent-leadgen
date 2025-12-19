@@ -137,20 +137,20 @@ export default function LeadsTable() {
         transition={{ duration: 0.6 }}
       >
         <motion.div
-          className="backdrop-blur-[20px] bg-white/60 dark:bg-white/5 rounded-2xl p-8 border border-white/10 overflow-hidden"
+          className="bg-white rounded-2xl p-8 border border-gray-100 overflow-hidden shadow-sm"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-3xl font-bold text-black dark:text-white">Generated Leads</h2>
+            <h2 className="text-3xl font-semibold text-gray-900">Generated Leads</h2>
             <div className="relative w-64">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
                 placeholder="Search leads..."
                 value={globalFilter}
                 onChange={(e) => setGlobalFilter(e.target.value)}
-                className="pl-10 bg-white/50 dark:bg-white/5 border-white/20"
+                className="pl-10 bg-[#F8F8F8] border-gray-200"
               />
             </div>
           </div>
@@ -185,11 +185,10 @@ export default function LeadsTable() {
                   {table.getRowModel().rows.map((row, index) => (
                     <motion.tr
                       key={row.id}
-                      className="border-b border-white/5 hover:bg-white/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+                      className="border-b border-gray-100 hover:bg-[#FFF8F0] transition-colors cursor-pointer"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.02 }}
-                      whileHover={{ x: 4 }}
                     >
                       {row.getVisibleCells().map((cell) => (
                         <td key={cell.id} className="py-4 px-4">

@@ -10,7 +10,7 @@ export default function DashboardGrid() {
   const { stats } = useLiveStats();
 
   return (
-    <section className="px-4 sm:px-6 lg:px-8 py-20 relative">
+    <section className="px-6 lg:px-8 py-24 relative bg-white">
       <motion.div
         className="max-w-7xl mx-auto"
         initial={{ opacity: 0 }}
@@ -19,7 +19,7 @@ export default function DashboardGrid() {
         transition={{ duration: 0.6 }}
       >
         <motion.h2
-          className="text-4xl md:text-5xl font-bold mb-12 text-black dark:text-white text-center"
+          className="text-5xl md:text-6xl font-semibold mb-20 text-center text-gray-900"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -27,7 +27,7 @@ export default function DashboardGrid() {
           Live Dashboard
         </motion.h2>
 
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid lg:grid-cols-3 gap-8">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -59,4 +59,3 @@ export default function DashboardGrid() {
     </section>
   );
 }
-

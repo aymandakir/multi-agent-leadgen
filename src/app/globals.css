@@ -2,9 +2,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FAFAFA;
-  --foreground: #1F2937;
+  --background: #FFFFFF;
+  --foreground: #2C2C2C;
   --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  /* Warm color palette inspired by Wix */
+  --warm-orange: #FF6B35;
+  --warm-cream: #FFF8F0;
+  --warm-beige: #F5F1EB;
+  --warm-gray: #6B6B6B;
+  --warm-dark: #2C2C2C;
+  --warm-light-gray: #F8F8F8;
 }
 
 @theme inline {
@@ -15,18 +23,26 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0F0F23;
-    --foreground: #F8FAFC;
+    --background: #1A1A1A;
+    --foreground: #F5F5F5;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', var(--font-inter), sans-serif;
-  line-height: 1.4;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+
+/* Wix-inspired typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 /* Custom scrollbar */
@@ -39,20 +55,20 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.3);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.5);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 @media (prefers-color-scheme: dark) {
   ::-webkit-scrollbar-thumb {
-    background: rgba(167, 139, 250, 0.3);
+    background: rgba(255, 255, 255, 0.2);
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(167, 139, 250, 0.5);
+    background: rgba(255, 255, 255, 0.3);
   }
 }
