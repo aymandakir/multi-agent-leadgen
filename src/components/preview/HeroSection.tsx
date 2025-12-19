@@ -1,19 +1,58 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLiveStats } from '@/hooks/usePreviewData';
 import { Sparkles } from 'lucide-react';
+import { useRef } from 'react';
 
 export default function HeroSection() {
   const { stats } = useLiveStats();
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start'],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-8 sm:pb-12 relative overflow-hidden bg-gradient-to-b from-white to-[#FFF8F0]">
+    <section 
+      ref={ref}
+      className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-8 sm:pb-12 relative overflow-hidden bg-gradient-to-b from-white to-[#FFF8F0]"
+    >
+      {/* Animated background particles */}
+      <motion.div
+        className="absolute inset-0 overflow-hidden pointer-events-none"
+        style={{ opacity }}
+      >
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-[#FF6B35]/20 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.2, 0.5, 0.2],
+              scale: [1, 1.5, 1],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
+      </motion.div>
       <motion.div
         className="max-w-6xl w-full relative z-10"
+        style={{ y }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         {/* Live Preview Badge */}
         <motion.div
@@ -63,7 +102,18 @@ export default function HeroSection() {
               className="bg-white rounded-xl p-3 sm:p-4 md:p-6 border border-gray-100"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 + index * 0.1 }}
+              transition={{ 
+                delay: 0.8 + index * 0.1,
+                type: 'spring',
+                stiffness: 200,
+                damping: 20
+              }}
+              whileHover={{ 
+                scale: 1.05,
+                y: -4,
+                transition: { type: 'spring', stiffness: 400, damping: 17 }
+              }}
+              style={{ willChange: 'transform' }}
             >
               <div className="text-xs sm:text-sm text-gray-600 mb-1 sm:mb-2">{stat.label}</div>
               <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-900">

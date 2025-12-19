@@ -31,8 +31,9 @@ export default function DashboardGrid() {
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ delay: 0.1, type: 'spring', stiffness: 200, damping: 20 }}
+            style={{ willChange: 'transform' }}
           >
             <LeadsPipeline stats={stats} />
           </motion.div>
@@ -40,8 +41,9 @@ export default function DashboardGrid() {
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 200, damping: 20 }}
+            style={{ willChange: 'transform' }}
           >
             <AgentPerformance />
           </motion.div>
@@ -49,8 +51,9 @@ export default function DashboardGrid() {
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ delay: 0.3, type: 'spring', stiffness: 200, damping: 20 }}
+            style={{ willChange: 'transform' }}
           >
             <ConversionFunnel stats={stats} />
           </motion.div>

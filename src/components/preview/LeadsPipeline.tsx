@@ -21,8 +21,13 @@ export default function LeadsPipeline({ stats }: LeadsPipelineProps) {
   return (
     <motion.div
       className="bg-[#FFF8F0] rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-100 h-full"
-      whileHover={{ y: -4 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      whileHover={{ 
+        y: -8,
+        scale: 1.02,
+        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+      }}
+      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+      style={{ willChange: 'transform' }}
     >
       <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8">
         <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#FF6B35] flex items-center justify-center flex-shrink-0">

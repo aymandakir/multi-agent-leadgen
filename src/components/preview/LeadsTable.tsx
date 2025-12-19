@@ -181,13 +181,23 @@ export default function LeadsTable() {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-100">
                     {table.getRowModel().rows.map((row, index) => (
-                      <motion.tr
-                        key={row.id}
-                        className="hover:bg-[#FFF8F0] transition-colors cursor-pointer"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.02 }}
-                      >
+                    <motion.tr
+                      key={row.id}
+                      className="hover:bg-[#FFF8F0] transition-colors cursor-pointer"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ 
+                        delay: index * 0.02,
+                        type: 'spring',
+                        stiffness: 200,
+                        damping: 20
+                      }}
+                      whileHover={{ 
+                        x: 4,
+                        transition: { type: 'spring', stiffness: 400, damping: 17 }
+                      }}
+                      style={{ willChange: 'transform' }}
+                    >
                         {row.getVisibleCells().map((cell) => (
                           <td key={cell.id} className="py-3 px-3 sm:px-4 text-sm">
                             {flexRender(cell.column.columnDef.cell, cell.getContext())}

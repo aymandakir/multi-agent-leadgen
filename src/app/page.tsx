@@ -1,15 +1,23 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { 
   ArrowRight, Sparkles, Zap, Target, TrendingUp, Shield, CheckCircle2 
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   const faqs = [
     {
@@ -48,13 +56,49 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="pt-24 sm:pt-32 md:pt-40 pb-16 sm:pb-24 md:pb-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-[#FFF8F0]">
-        <div className="container mx-auto max-w-5xl">
+      <section 
+        ref={heroRef}
+        className="pt-24 sm:pt-32 md:pt-40 pb-16 sm:pb-24 md:pb-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-[#FFF8F0] relative overflow-hidden"
+      >
+        {/* Animated background elements */}
+        <motion.div
+          className="absolute inset-0 overflow-hidden pointer-events-none"
+          style={{ opacity }}
+        >
+          <motion.div
+            className="absolute top-20 left-10 w-72 h-72 bg-[#FF6B35]/5 rounded-full blur-3xl"
+            animate={{
+              x: [0, 100, 0],
+              y: [0, 50, 0],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+          <motion.div
+            className="absolute bottom-20 right-10 w-96 h-96 bg-[#FF6B35]/5 rounded-full blur-3xl"
+            animate={{
+              x: [0, -100, 0],
+              y: [0, -50, 0],
+              scale: [1, 1.3, 1],
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+        </motion.div>
+        <div className="container mx-auto max-w-5xl relative z-10">
           <motion.div
             className="text-center"
+            style={{ y }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <motion.h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold mb-6 sm:mb-8 text-gray-900 leading-tight tracking-tight px-2"
@@ -145,15 +189,25 @@ export default function Home() {
               return (
                 <motion.div
                   key={feature.title}
-                  className="bg-[#FFF8F0] rounded-2xl p-8 hover:shadow-lg transition-shadow"
+                  className="bg-[#FFF8F0] rounded-2xl p-8 hover:shadow-lg transition-all duration-300"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.4, ease: 'easeOut' }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ delay: index * 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  whileHover={{ 
+                    y: -8,
+                    scale: 1.02,
+                    transition: { type: 'spring', stiffness: 400, damping: 17 }
+                  }}
+                  style={{ willChange: 'transform' }}
                 >
-                  <div className={`w-12 h-12 ${feature.color} mb-6`}>
+                  <motion.div 
+                    className={`w-12 h-12 ${feature.color} mb-6`}
+                    whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                    transition={{ duration: 0.5 }}
+                  >
                     <Icon className="w-12 h-12" />
-                  </div>
+                  </motion.div>
                   <h3 className="text-2xl font-semibold mb-4 text-gray-900">{feature.title}</h3>
                   <p className="text-gray-600 leading-relaxed">{feature.description}</p>
                 </motion.div>
@@ -216,10 +270,22 @@ export default function Home() {
                 className="flex items-start gap-3 sm:gap-4 bg-[#FFF8F0] rounded-xl p-4 sm:p-6"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.4 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ delay: index * 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                whileHover={{ 
+                  x: 8,
+                  transition: { type: 'spring', stiffness: 400, damping: 17 }
+                }}
+                style={{ willChange: 'transform' }}
               >
-                <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF6B35] flex-shrink-0 mt-0.5 sm:mt-1" />
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 + 0.2, type: 'spring', stiffness: 200 }}
+                >
+                  <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF6B35] flex-shrink-0 mt-0.5 sm:mt-1" />
+                </motion.div>
                 <p className="text-base sm:text-lg text-gray-700">{benefit}</p>
               </motion.div>
             ))}
@@ -341,6 +407,7 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

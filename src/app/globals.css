@@ -33,6 +33,31 @@ body {
   overflow-x: hidden;
 }
 
+/* Performance optimizations for 60fps animations */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+}
+
 /* Responsive container max-widths */
 @media (min-width: 1536px) {
   .container {
