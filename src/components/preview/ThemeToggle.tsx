@@ -12,22 +12,56 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     setMounted(true);
-    // Check system preference or stored theme
+    
+    // Get initial theme from localStorage or system preference
+    const storedTheme = localStorage.getItem('theme') || 'system';
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    let shouldBeDark = false;
+    if (storedTheme === 'dark') {
+      shouldBeDark = true;
+    } else if (storedTheme === 'light') {
+      shouldBeDark = false;
+    } else {
+      shouldBeDark = systemPrefersDark;
+    }
+    
+    setIsDark(shouldBeDark);
+    
+    // Apply theme to document
+    if (shouldBeDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    
+    // Sync with store
+    if (storedTheme !== theme) {
+      setTheme(storedTheme as 'light' | 'dark' | 'system');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const shouldBeDark = theme === 'dark' || (theme === 'system' && systemPrefersDark);
+    
     setIsDark(shouldBeDark);
+    localStorage.setItem('theme', theme);
     
     if (shouldBeDark) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-  }, [theme]);
+  }, [theme, mounted]);
 
   const toggleTheme = () => {
     const newTheme = isDark ? 'light' : 'dark';
     setTheme(newTheme);
     setIsDark(!isDark);
+    localStorage.setItem('theme', newTheme);
     
     if (!isDark) {
       document.documentElement.classList.add('dark');
@@ -36,7 +70,7 @@ export default function ThemeToggle() {
     }
   };
 
-  // Prevent hydration mismatch by not rendering until mounted
+  // Prevent hydration mismatch
   if (!mounted) {
     return (
       <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
