@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import ThemeToggle from './ThemeToggle';
 
 export default function StatusBar() {
   return (
@@ -14,9 +13,6 @@ export default function StatusBar() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Link href="/" className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-            ← Back to Home
-          </Link>
           <span className="text-xs font-medium text-gray-600 dark:text-gray-400 tracking-wide">
             leadgen-demo
           </span>
@@ -30,13 +26,9 @@ export default function StatusBar() {
           </motion.span>
         </div>
         <div className="flex items-center gap-4">
-          <ThemeToggle />
-          <a
-            href="/dashboard"
-            className="px-4 py-2 rounded-full bg-black dark:bg-white text-white dark:text-black text-sm font-medium hover:opacity-80 transition-opacity"
-          >
-            Open Dashboard →
-          </a>
+          <Link href="/" className="px-4 py-2 rounded-full bg-black dark:bg-white text-white dark:text-black text-sm font-medium hover:opacity-80 transition-opacity">
+            Back to Home →
+          </Link>
         </div>
       </div>
     </motion.div>

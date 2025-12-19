@@ -8,10 +8,7 @@ import {
   Users, Building2, BarChart3, Globe, Lock, Clock, Mail, Brain, 
   Code, Database, Settings, Rocket, Star, Quote, ChevronDown
 } from 'lucide-react';
-import dynamic from 'next/dynamic';
 import { useState } from 'react';
-
-const ThemeToggle = dynamic(() => import('@/components/preview/ThemeToggle'), { ssr: false });
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -62,12 +59,6 @@ export default function Home() {
                 View Dashboard
               </Button>
             </Link>
-            <Link href="/signup">
-              <Button className="bg-black dark:bg-white text-white dark:text-black hover:opacity-90">
-                Get Started
-              </Button>
-            </Link>
-            <ThemeToggle />
           </nav>
         </div>
       </header>
