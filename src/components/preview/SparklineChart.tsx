@@ -20,6 +20,7 @@ export default function SparklineChart({ data, color }: SparklineChartProps) {
           strokeWidth={2}
           dot={false}
           animationDuration={1000}
+          isAnimationActive={true}
         />
       </LineChart>
     </ResponsiveContainer>

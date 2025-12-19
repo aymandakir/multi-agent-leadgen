@@ -21,12 +21,6 @@
   --font-sans: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #1A1A1A;
-    --foreground: #F5F5F5;
-  }
-}
 
 body {
   background: var(--background);

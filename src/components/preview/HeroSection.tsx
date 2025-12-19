@@ -1,11 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 import { useLiveStats } from '@/hooks/usePreviewData';
 import { Sparkles } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
 
 export default function HeroSection() {
   const { stats } = useLiveStats();
@@ -51,7 +48,7 @@ export default function HeroSection() {
 
         {/* Animated Stats */}
         <motion.div
-          className="grid grid-cols-3 gap-6 md:gap-8 mb-12 max-w-3xl"
+          className="grid grid-cols-3 gap-6 md:gap-8 max-w-3xl"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
@@ -75,20 +72,6 @@ export default function HeroSection() {
               </div>
             </motion.div>
           ))}
-        </motion.div>
-
-        {/* CTAs */}
-        <motion.div
-          className="flex flex-col sm:flex-row gap-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-        >
-          <Link href="/dashboard">
-            <Button className="bg-[#FF6B35] hover:bg-[#E55A2B] text-white px-8 py-6 text-lg font-medium rounded-lg h-auto">
-              View Dashboard
-            </Button>
-          </Link>
         </motion.div>
       </motion.div>
     </section>

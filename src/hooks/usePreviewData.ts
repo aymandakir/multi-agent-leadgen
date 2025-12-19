@@ -87,7 +87,6 @@ export function useLiveStats() {
         // If error or no data, keep default stats
       } catch (error) {
         // Keep default stats for public preview
-        console.error('Error fetching stats:', error);
       }
     };
 

@@ -1,15 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import HeroSection from '@/components/preview/HeroSection';
 import DashboardGrid from '@/components/preview/DashboardGrid';
 import LeadsTable from '@/components/preview/LeadsTable';
 import StatusBar from '@/components/preview/StatusBar';
-
-const ParticleBackground = dynamic(() => import('@/components/preview/ParticleBackground'), {
-  ssr: false,
-});
 
 export default function PreviewPage() {
   return (
