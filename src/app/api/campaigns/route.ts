@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { CreateCampaignSchema } from '@/lib/types';
-import { getCurrentOrganization } from '@/lib/utils/org';
+import { ORG_ID } from '@/lib/org-context';
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,18 +12,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const org = await getCurrentOrganization();
-    if (!org) {
-      return NextResponse.json({ error: 'No organization found' }, { status: 400 });
-    }
-
     const body = await request.json();
     const validated = CreateCampaignSchema.parse(body);
 
     const { data: campaign, error } = await supabase
       .from('campaigns')
       .insert({
-        organization_id: org.id,
+        organization_id: ORG_ID,
         name: validated.name,
         icp_config: validated.icp_config,
         messaging_tone: validated.messaging_tone,
@@ -60,15 +55,10 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const org = await getCurrentOrganization();
-    if (!org) {
-      return NextResponse.json({ campaigns: [] });
-    }
-
     const { data: campaigns, error } = await supabase
       .from('campaigns')
       .select('*')
-      .eq('organization_id', org.id)
+      .eq('organization_id', ORG_ID)
       .order('created_at', { ascending: false });
 
     if (error) {

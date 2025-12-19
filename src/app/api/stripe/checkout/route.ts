@@ -1,20 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { getCurrentOrganization } from '@/lib/utils/org';
-import { stripe, PLAN_CONFIGS } from '@/lib/stripe/config';
+import { ORG_ID } from '@/lib/org-context';
+import { getStripe, PLAN_CONFIGS } from '@/lib/stripe/config';
 
 export async function POST(request: NextRequest) {
   try {
+    const stripe = getStripe();
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const org = await getCurrentOrganization();
-    if (!org) {
-      return NextResponse.json({ error: 'No organization found' }, { status: 400 });
     }
 
     const body = await request.json();
@@ -33,7 +29,7 @@ export async function POST(request: NextRequest) {
     const { data: subscription } = await supabase
       .from('subscriptions')
       .select('stripe_customer_id')
-      .eq('organization_id', org.id)
+      .eq('organization_id', ORG_ID)
       .single();
 
     let customerId = subscription?.stripe_customer_id;
@@ -43,7 +39,7 @@ export async function POST(request: NextRequest) {
       const customer = await stripe.customers.create({
         email: user.email,
         metadata: {
-          organization_id: org.id,
+          organization_id: ORG_ID,
           user_id: user.id,
         },
       });
@@ -54,7 +50,7 @@ export async function POST(request: NextRequest) {
       await supabase
         .from('subscriptions')
         .update({ stripe_customer_id: customerId })
-        .eq('organization_id', org.id);
+        .eq('organization_id', ORG_ID);
     }
 
     // Create checkout session
@@ -71,7 +67,7 @@ export async function POST(request: NextRequest) {
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/dashboard?success=true`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/dashboard?canceled=true`,
       metadata: {
-        organization_id: org.id,
+        organization_id: ORG_ID,
         plan,
       },
     });

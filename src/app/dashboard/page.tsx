@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { getCurrentOrganization } from '@/lib/utils/org';
+import { ORG_ID } from '@/lib/org-context';
 import { getOrganizationCredits } from '@/lib/utils/credits';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -15,28 +15,7 @@ export default async function DashboardPage() {
     redirect('/login');
   }
 
-  const org = await getCurrentOrganization();
-  if (!org) {
-    // Redirect to create organization or show onboarding
-    return (
-      <div className="container mx-auto px-4 py-12">
-        <Card>
-          <CardHeader>
-            <CardTitle>Welcome!</CardTitle>
-            <CardDescription>Create your workspace to get started</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form action="/api/organizations" method="POST">
-              <input type="text" name="name" placeholder="Workspace name" required className="mb-4 w-full rounded border p-2" />
-              <Button type="submit">Create Workspace</Button>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  const credits = await getOrganizationCredits(org.id);
+  const credits = await getOrganizationCredits(ORG_ID);
 
   return (
     <div className="container mx-auto px-4 py-8">

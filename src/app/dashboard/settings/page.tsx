@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { getCurrentOrganization } from '@/lib/utils/org';
+import { ORG_ID } from '@/lib/org-context';
 import { getOrganizationCredits } from '@/lib/utils/credits';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -14,12 +14,7 @@ export default async function SettingsPage() {
     redirect('/login');
   }
 
-  const org = await getCurrentOrganization();
-  if (!org) {
-    redirect('/dashboard');
-  }
-
-  const credits = await getOrganizationCredits(org.id);
+  const credits = await getOrganizationCredits(ORG_ID);
 
   return (
     <div className="container mx-auto max-w-4xl px-4 py-8">

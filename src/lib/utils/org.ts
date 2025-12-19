@@ -1,5 +1,6 @@
 import { createClient } from '../supabase/server';
 import { Organization, Member } from '../types';
+import { ORG_ID } from '../org-context';
 
 export async function getUserOrganizations(): Promise<Organization[]> {
   const supabase = await createClient();
@@ -29,28 +30,12 @@ export async function getUserOrganizations(): Promise<Organization[]> {
 
 export async function getCurrentOrganization(): Promise<Organization | null> {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
   
-  if (!user) {
-    return null;
-  }
-
-  // Get user's first organization (in production, you'd use a selected org from session)
-  const { data: members } = await supabase
-    .from('members')
-    .select('organization_id')
-    .eq('user_id', user.id)
-    .limit(1)
-    .single();
-
-  if (!members) {
-    return null;
-  }
-
+  // Always return the fixed organization for this demo
   const { data: org } = await supabase
     .from('organizations')
     .select('*')
-    .eq('id', members.organization_id)
+    .eq('id', ORG_ID)
     .single();
 
   return org;

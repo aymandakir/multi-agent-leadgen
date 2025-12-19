@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { CampaignOrchestrator } from '@/lib/agents/orchestrator';
-import { getCurrentOrganization } from '@/lib/utils/org';
+import { ORG_ID } from '@/lib/org-context';
 import { checkCreditsAvailable, useCredits } from '@/lib/utils/credits';
 
 export async function POST(
@@ -17,17 +17,12 @@ export async function POST(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const org = await getCurrentOrganization();
-    if (!org) {
-      return NextResponse.json({ error: 'No organization found' }, { status: 400 });
-    }
-
     // Fetch campaign
     const { data: campaign, error: campaignError } = await supabase
       .from('campaigns')
       .select('*')
       .eq('id', id)
-      .eq('organization_id', org.id)
+      .eq('organization_id', ORG_ID)
       .single();
 
     if (campaignError || !campaign) {
@@ -36,7 +31,7 @@ export async function POST(
 
     // Check credits (estimate: 4 credits per lead - source, enrich, outreach, analyze)
     const estimatedCredits = 40; // 10 leads * 4 credits
-    const hasCredits = await checkCreditsAvailable(org.id, estimatedCredits);
+    const hasCredits = await checkCreditsAvailable(ORG_ID, estimatedCredits);
 
     if (!hasCredits) {
       return NextResponse.json(
@@ -62,13 +57,14 @@ export async function POST(
     });
 
     // Use credits
-    await useCredits(org.id, result.creditsUsed);
+    await useCredits(ORG_ID, result.creditsUsed);
 
     // Update campaign status
     await supabase
       .from('campaigns')
       .update({ status: result.success ? 'completed' : 'draft' })
-      .eq('id', id);
+      .eq('id', id)
+      .eq('organization_id', ORG_ID);
 
     return NextResponse.json({
       success: result.success,

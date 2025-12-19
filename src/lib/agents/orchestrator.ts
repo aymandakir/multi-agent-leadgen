@@ -5,6 +5,7 @@ import { OutreachAgent } from './outreach-agent';
 import { AnalysisAgent } from './analysis-agent';
 import { ICPConfig, Campaign, Lead, OutreachDraft } from '../types';
 import { createClient } from '../supabase/server';
+import { ORG_ID } from '../org-context';
 
 export interface CampaignRunConfig {
   campaignId: string;
@@ -50,6 +51,7 @@ export class CampaignOrchestrator {
           status: 'running',
           leads_generated: 0,
           credits_used: 0,
+          organization_id: ORG_ID,
         })
         .select()
         .single();
@@ -85,6 +87,7 @@ export class CampaignOrchestrator {
               linkedin_url: enrichmentData.linkedin_url || null,
               location: sourcedLead.location || null,
               enriched_data: enrichmentData as Record<string, unknown>,
+              organization_id: ORG_ID,
             })
             .select()
             .single();
@@ -126,6 +129,7 @@ export class CampaignOrchestrator {
               subject: outreachDraft.subject,
               body: outreachDraft.body,
               variant: outreachDraft.variant || 'default',
+              organization_id: ORG_ID,
             })
             .select()
             .single();
@@ -143,9 +147,31 @@ export class CampaignOrchestrator {
 
           // Step 4: Analyze and score lead
           console.log(`Step 4: Analyzing lead ${lead.name}...`);
+          
+          // Use saved draft from DB if available, otherwise create minimal draft for analysis
+          const draftForAnalysis: OutreachDraft = draft
+            ? {
+                id: draft.id,
+                lead_id: draft.lead_id,
+                subject: draft.subject,
+                body: draft.body,
+                variant: draft.variant || 'default',
+                score: draft.score,
+                created_at: draft.created_at,
+              }
+            : {
+                id: '', // Temporary ID, will be updated after analysis
+                lead_id: lead.id,
+                subject: outreachDraft.subject,
+                body: outreachDraft.body,
+                variant: outreachDraft.variant || 'default',
+                score: null,
+                created_at: new Date().toISOString(),
+              };
+          
           const analysis = await this.analysisAgent.analyzeLead({
             lead,
-            outreachDraft,
+            outreachDraft: draftForAnalysis,
             icpConfig: config.icpConfig,
             goal: config.goal,
           });
@@ -155,14 +181,16 @@ export class CampaignOrchestrator {
           await supabase
             .from('leads')
             .update({ score: analysis.score })
-            .eq('id', lead.id);
+            .eq('id', lead.id)
+            .eq('organization_id', ORG_ID);
 
           // Update outreach draft with score
           if (draft) {
             await supabase
               .from('outreach_drafts')
               .update({ score: analysis.score })
-              .eq('id', draft.id);
+              .eq('id', draft.id)
+              .eq('organization_id', ORG_ID);
           }
 
           // Record analysis event
@@ -193,7 +221,8 @@ export class CampaignOrchestrator {
           credits_used: creditsUsed,
           completed_at: new Date().toISOString(),
         })
-        .eq('id', runRecord.id);
+        .eq('id', runRecord.id)
+        .eq('organization_id', ORG_ID);
 
       return {
         success: true,

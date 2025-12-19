@@ -101,7 +101,7 @@ export const LeadSchema = z.object({
   email: z.string().nullable(),
   linkedin_url: z.string().nullable(),
   location: z.string().nullable(),
-  enriched_data: z.record(z.unknown()).nullable(),
+  enriched_data: z.record(z.string(), z.unknown()).nullable(),
   score: z.number().nullable(),
   status: LeadStatusSchema,
   created_at: z.string(),
@@ -118,7 +118,7 @@ export const LeadEventSchema = z.object({
   id: z.string().uuid(),
   lead_id: z.string().uuid(),
   event_type: LeadEventTypeSchema,
-  metadata: z.record(z.unknown()).nullable(),
+  metadata: z.record(z.string(), z.unknown()).nullable(),
   created_at: z.string(),
 });
 
