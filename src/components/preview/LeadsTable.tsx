@@ -28,7 +28,7 @@ export default function LeadsTable() {
         header: ({ column }) => (
           <button
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="flex items-center gap-2 hover:text-gray-900 dark:hover:text-white"
+            className="flex items-center gap-2 hover:text-gray-900 text-gray-700 font-medium"
           >
             Company
             <ArrowUpDown className="w-4 h-4" />
@@ -36,14 +36,14 @@ export default function LeadsTable() {
         ),
         cell: ({ row }) => (
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm">
+            <div className="w-10 h-10 rounded-xl bg-[#FF6B35] flex items-center justify-center text-white font-semibold text-sm">
               {row.original.company_name.charAt(0)}
             </div>
             <div>
-              <div className="font-medium text-black dark:text-white">
+              <div className="font-medium text-gray-900">
                 {row.original.company_name}
               </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
+              <div className="text-sm text-gray-500">
                 {row.original.industry || 'Technology'}
               </div>
             </div>
@@ -55,11 +55,11 @@ export default function LeadsTable() {
         header: 'Contact',
         cell: ({ row }) => (
           <div>
-            <div className="flex items-center gap-2 text-black dark:text-white">
+            <div className="flex items-center gap-2 text-gray-900">
               <User className="w-4 h-4 text-gray-400" />
               {row.original.name}
             </div>
-            <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            <div className="text-sm text-gray-500 mt-1">
               {row.original.role}
             </div>
           </div>
@@ -69,7 +69,7 @@ export default function LeadsTable() {
         accessorKey: 'location',
         header: 'Location',
         cell: ({ row }) => (
-          <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+          <div className="flex items-center gap-2 text-gray-600">
             <MapPin className="w-4 h-4" />
             {row.original.location || 'San Francisco, CA'}
           </div>
@@ -81,13 +81,13 @@ export default function LeadsTable() {
         cell: ({ row }) => {
           const status = row.original.status;
           const colors = {
-            qualified: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-            contacted: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
-            responded: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
-            new: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400',
+            qualified: 'bg-green-50 text-green-700 border border-green-200',
+            contacted: 'bg-blue-50 text-blue-700 border border-blue-200',
+            responded: 'bg-purple-50 text-purple-700 border border-purple-200',
+            new: 'bg-gray-50 text-gray-700 border border-gray-200',
           };
           return (
-            <span className={`px-3 py-1 rounded-full text-xs font-medium ${colors[status as keyof typeof colors] || colors.new}`}>
+            <span className={`px-3 py-1.5 rounded-lg text-xs font-medium ${colors[status as keyof typeof colors] || colors.new}`}>
               {status}
             </span>
           );
@@ -98,7 +98,7 @@ export default function LeadsTable() {
         header: ({ column }) => (
           <button
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            className="flex items-center gap-2 hover:text-gray-900 dark:hover:text-white"
+            className="flex items-center gap-2 hover:text-gray-900 text-gray-700 font-medium"
           >
             Score
             <ArrowUpDown className="w-4 h-4" />
@@ -106,7 +106,7 @@ export default function LeadsTable() {
         ),
         cell: ({ row }) => (
           <div className="text-right">
-            <div className="text-lg font-bold text-black dark:text-white">
+            <div className="text-lg font-semibold text-gray-900">
               {row.original.score || 0}
             </div>
           </div>
@@ -156,7 +156,7 @@ export default function LeadsTable() {
           </div>
 
           {loading ? (
-            <div className="text-center py-12 text-gray-600 dark:text-gray-400">
+            <div className="text-center py-12 text-gray-600">
               Loading leads...
             </div>
           ) : (
@@ -166,12 +166,12 @@ export default function LeadsTable() {
                   {table.getHeaderGroups().map((headerGroup) => (
                     <tr
                       key={headerGroup.id}
-                      className="border-b border-white/10"
+                      className="border-b border-gray-200"
                     >
                       {headerGroup.headers.map((header) => (
                         <th
                           key={header.id}
-                          className="text-left py-4 px-4 text-sm font-medium text-gray-600 dark:text-gray-400"
+                          className="text-left py-4 px-4 text-sm font-medium text-gray-700"
                         >
                           {header.isPlaceholder
                             ? null

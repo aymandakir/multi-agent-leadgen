@@ -242,31 +242,40 @@ export default function Home() {
             Frequently Asked Questions
           </motion.h2>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {faqs.map((faq, index) => (
               <motion.div
                 key={index}
                 className="bg-white rounded-xl border border-gray-200 overflow-hidden"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.05, duration: 0.3 }}
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full p-6 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+                  className="w-full p-6 flex items-center justify-between text-left hover:bg-[#FFF8F0] transition-colors group"
                 >
-                  <span className="text-lg font-semibold text-gray-900">{faq.question}</span>
-                  <span className="text-2xl text-gray-400">{openFaq === index ? '−' : '+'}</span>
+                  <span className="text-lg font-medium text-gray-900 pr-4">{faq.question}</span>
+                  <motion.span
+                    className="text-xl text-gray-400 group-hover:text-[#FF6B35] transition-colors flex-shrink-0"
+                    animate={{ rotate: openFaq === index ? 45 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    +
+                  </motion.span>
                 </button>
                 {openFaq === index && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="px-6 pb-6"
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="overflow-hidden"
                   >
-                    <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                    <div className="px-6 pb-6 pt-0">
+                      <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                    </div>
                   </motion.div>
                 )}
               </motion.div>
