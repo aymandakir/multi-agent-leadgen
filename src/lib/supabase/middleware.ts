@@ -16,13 +16,19 @@ export async function updateSession(request: NextRequest) {
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    // Redirect to preview page if Supabase is not configured
-    if (request.nextUrl.pathname !== '/preview' && request.nextUrl.pathname !== '/supabase-setup') {
+    // Allow public routes even without Supabase config
+    const publicRoutesWithoutSupabase = ['/preview', '/supabase-setup', '/'];
+    const isPublicRouteWithoutSupabase = publicRoutesWithoutSupabase.some(route => 
+      request.nextUrl.pathname === route || request.nextUrl.pathname.startsWith(route + '/')
+    );
+    
+    if (!isPublicRouteWithoutSupabase) {
+      // Redirect protected routes to home page if Supabase is not configured
       const url = request.nextUrl.clone();
-      url.pathname = '/preview';
+      url.pathname = '/';
       return NextResponse.redirect(url);
     }
-    // Allow preview and setup pages to load
+    // Allow public routes to load
     return supabaseResponse;
   }
 

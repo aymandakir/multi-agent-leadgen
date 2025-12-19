@@ -1,9 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function StatusBar() {
+  const router = useRouter();
+  
   return (
     <motion.div
       className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100"
@@ -13,9 +15,13 @@ export default function StatusBar() {
     >
       <div className="container mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Link href="/" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+          <button
+            onClick={() => router.push('/')}
+            className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors cursor-pointer"
+            type="button"
+          >
             ← Back to Home
-          </Link>
+          </button>
           <span className="text-xs font-medium text-gray-500 tracking-wide">
             leadgen-demo
           </span>

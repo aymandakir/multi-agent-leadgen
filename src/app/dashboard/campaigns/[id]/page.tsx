@@ -28,7 +28,7 @@ export default async function CampaignDetailPage({
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect('/login');
+    redirect('/');
   }
 
   const data = await getCampaignData(id);
