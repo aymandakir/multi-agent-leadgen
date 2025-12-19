@@ -1,41 +1,17 @@
 'use client';
 
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { 
   ArrowRight, Sparkles, Zap, Target, TrendingUp, Shield, CheckCircle2 
 } from 'lucide-react';
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import Footer from '@/components/Footer';
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
   const reducedMotion = useReducedMotion();
-  const heroRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
-  
-  // Disable parallax on mobile and reduced motion
-  const y = useTransform(
-    scrollYProgress, 
-    [0, 1], 
-    reducedMotion || isMobile ? ['0%', '0%'] : ['0%', '50%']
-  );
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   const faqs = [
     {
@@ -75,71 +51,27 @@ export default function Home() {
 
       {/* Hero Section */}
       <section 
-        ref={heroRef}
         className="pt-24 sm:pt-32 md:pt-40 pb-16 sm:pb-24 md:pb-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-[#FFF8F0] relative overflow-hidden"
       >
-        {/* Animated background elements - optimized for mobile */}
+        {/* Subtle static background elements */}
         {!reducedMotion && (
-          <motion.div
-            className="absolute inset-0 overflow-hidden pointer-events-none"
-            style={{ opacity }}
-          >
-            <motion.div
-              className="absolute top-20 left-10 w-72 h-72 bg-[#FF6B35]/5 rounded-full blur-3xl"
-              animate={{
-                x: [0, 100, 0],
-                y: [0, 50, 0],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: 'linear',
-              }}
-              style={{ 
-                willChange: 'transform', 
-                transform: 'translate3d(0, 0, 0)',
-                backfaceVisibility: 'hidden',
-              }}
-            />
-            <motion.div
-              className="absolute bottom-20 right-10 w-96 h-96 bg-[#FF6B35]/5 rounded-full blur-3xl"
-              animate={{
-                x: [0, -100, 0],
-                y: [0, -50, 0],
-                scale: [1, 1.3, 1],
-              }}
-              transition={{
-                duration: 25,
-                repeat: Infinity,
-                ease: 'linear',
-              }}
-              style={{ 
-                willChange: 'transform', 
-                transform: 'translate3d(0, 0, 0)',
-                backfaceVisibility: 'hidden',
-              }}
-            />
-          </motion.div>
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-20 left-10 w-72 h-72 bg-[#FF6B35]/5 rounded-full blur-3xl opacity-50" />
+            <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#FF6B35]/5 rounded-full blur-3xl opacity-50" />
+          </div>
         )}
         <div className="container mx-auto max-w-5xl relative z-10">
           <motion.div
             className="text-center"
-            style={{ 
-              y: reducedMotion || isMobile ? undefined : y,
-              transform: 'translateZ(0)',
-              willChange: reducedMotion || isMobile ? 'opacity' : 'transform, opacity',
-            }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <motion.h1
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-semibold mb-6 sm:mb-8 text-gray-900 leading-tight tracking-tight px-2"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold mb-4 sm:mb-6 md:mb-8 text-gray-900 leading-tight tracking-tight px-2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-              style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
             >
               Create a lead generation
               <br className="hidden sm:block" />
@@ -147,11 +79,10 @@ export default function Home() {
             </motion.h1>
 
             <motion.p
-              className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-600 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed font-light px-4"
+              className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 md:mb-12 max-w-2xl mx-auto leading-relaxed font-light px-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-              style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
             >
               Bring your sales pipeline to life with AI-powered multi-agent automation.
             </motion.p>
@@ -186,7 +117,7 @@ export default function Home() {
       <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="container mx-auto max-w-6xl">
           <motion.h2
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-12 sm:mb-16 md:mb-20 text-center text-gray-900 px-4"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-8 sm:mb-12 md:mb-16 text-center text-gray-900 px-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -244,8 +175,8 @@ export default function Home() {
                   >
                     <Icon className="w-12 h-12" />
                   </motion.div>
-                  <h3 className="text-2xl font-semibold mb-4 text-gray-900">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                  <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-900">{feature.title}</h3>
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{feature.description}</p>
                 </motion.div>
               );
             })}
@@ -271,10 +202,10 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.4 }}
               >
-                <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-2 sm:mb-3 text-gray-900">
+                <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-2 sm:mb-3 text-gray-900">
                   {stat.value}
                 </div>
-                <div className="text-sm sm:text-base text-gray-600">{stat.label}</div>
+                <div className="text-xs sm:text-sm text-gray-600">{stat.label}</div>
               </motion.div>
             ))}
           </div>
@@ -285,7 +216,7 @@ export default function Home() {
       <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="container mx-auto max-w-4xl">
           <motion.h2
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-12 sm:mb-16 text-center text-gray-900 px-4"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-8 sm:mb-12 md:mb-16 text-center text-gray-900 px-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -322,7 +253,7 @@ export default function Home() {
                 >
                   <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF6B35] flex-shrink-0 mt-0.5 sm:mt-1" />
                 </motion.div>
-                <p className="text-base sm:text-lg text-gray-700">{benefit}</p>
+                <p className="text-sm sm:text-base md:text-lg text-gray-700">{benefit}</p>
               </motion.div>
             ))}
           </div>
@@ -333,7 +264,7 @@ export default function Home() {
       <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#F8F8F8] to-white">
         <div className="container mx-auto max-w-4xl">
           <motion.h2
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-12 sm:mb-16 md:mb-20 text-center text-gray-900 px-4"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-8 sm:mb-12 md:mb-16 text-center text-gray-900 px-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -365,7 +296,7 @@ export default function Home() {
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
                     className="w-full p-4 sm:p-6 md:p-8 flex items-center justify-between text-left hover:bg-white/50 transition-all duration-300 rounded-2xl group"
                   >
-                    <span className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 pr-4 sm:pr-6 leading-relaxed">
+                    <span className="text-sm sm:text-base md:text-lg font-semibold text-gray-900 pr-4 sm:pr-6 leading-relaxed">
                       {faq.question}
                     </span>
                     <motion.div
@@ -406,7 +337,7 @@ export default function Home() {
                           delay: openFaq === index ? 0.2 : 0,
                           duration: 0.3
                         }}
-                        className="text-gray-600 leading-relaxed text-sm sm:text-base md:text-lg"
+                        className="text-gray-600 leading-relaxed text-xs sm:text-sm md:text-base"
                       >
                         {faq.answer}
                       </motion.p>
@@ -428,10 +359,10 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 sm:mb-6 text-gray-900 px-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 sm:mb-6 text-gray-900 px-4">
               Your vision. Your goals. Your pipeline.
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 sm:mb-10 px-4">
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-6 sm:mb-8 md:mb-10 px-4">
               Join thousands of companies using AI to find and connect with their ideal customers.
             </p>
             <Link href="/preview" className="inline-block px-4">

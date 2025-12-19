@@ -67,9 +67,21 @@ body {
   }
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling with better performance */
 html {
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Smooth scrolling for all browsers */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Optimize scrolling performance */
+body {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
 }
 
 /* Optimize animations */
